@@ -22,6 +22,24 @@ namespace ODataQueryHelper.Core
                 {
                     model.Filter.TryParseFilter<T>(filterQuery);
                 }
+
+                var orderByQuery = queryStrings["$orderby"];
+                if (!string.IsNullOrEmpty(orderByQuery))
+                {
+                    model.OrderBy.TryParse<T>(orderByQuery);
+                }
+
+                var skip = queryStrings["$skip"];
+                if (!string.IsNullOrEmpty(skip))
+                {
+                    model.TryParseSkip(skip);
+                }
+
+                var top = queryStrings["$top"];
+                if (!string.IsNullOrEmpty(top))
+                {
+                    model.TryParseTop(top);
+                }
             }
 
             return model;

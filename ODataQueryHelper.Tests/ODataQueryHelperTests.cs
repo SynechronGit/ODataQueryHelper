@@ -1,9 +1,7 @@
 using MongoDB.Bson;
 using MongoDB.Driver;
 using ODataQueryHelper.Core;
-using ODataQueryHelper.Core.Model;
 using ODataQueryHelper.MongoDB;
-using System;
 using Xunit;
 
 namespace ODataQueryHelper.Tests
@@ -31,7 +29,8 @@ namespace ODataQueryHelper.Tests
         [Fact]
         public void QueryRunnerTest()
         {
-            var expression = "$filter=Age eq 10";
+            var expression = "$filter=Age eq 10&$skip=0&$top=3";
+            //var expression = "$orderby=Age asc,FirstName asc";
             var docQuery = new ODataQueryParser();
             var query = docQuery.TryParse<Employee>(expression);
 

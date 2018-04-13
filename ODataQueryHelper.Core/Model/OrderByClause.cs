@@ -5,24 +5,40 @@ using System.Text.RegularExpressions;
 
 namespace ODataQueryHelper.Core.Model
 {
+    /// <summary>
+    /// Represents Order by clause provided in OData Query Expression
+    /// </summary>
     public class OrderByClause
     {
-		public List<OrderByNode> OrderByFields { get; protected set; }
+        const string fieldSeparator = @"\,";
+        const string orderBySeparator = @"\s+";
 
-		const string fieldSeparator = @"\,";
-		const string orderBySeparator = @"\S+";
+        /// <summary>
+        /// Collection of order by node 
+        /// </summary>
+		public List<OrderByNode> OrderByNodes { get; protected set; }
+
+		/// <summary>
+        /// Creates new instance of OrderByClause
+        /// </summary>
 		public OrderByClause()
 		{
-			OrderByFields = new List<OrderByNode>();
+			OrderByNodes = new List<OrderByNode>();
 		}
 
-		public void Parse(string value)
+        /// <summary>
+        /// Try and Parse Orderby expression from OData Query
+        /// </summary>
+        /// <exception cref="ArgumentNullException">If <paramref name="expression"/> is not null or empty.</exception>
+        /// <exception cref="Exception.PropertyNotFoundException">property name provided in field does not belong to <typeparamref name="T"/>></exception>
+        /// <param name="expression">order by expression</param>
+		public void TryParse<T>(string expression)
 		{
-			if (string.IsNullOrEmpty(value))
+			if (string.IsNullOrEmpty(expression))
 			{
-				throw new ArgumentNullException(value);
+				throw new ArgumentNullException(expression);
 			}
-			List<string> fields = Regex.Split(value, fieldSeparator)?.ToList();
+			List<string> fields = Regex.Split(expression, fieldSeparator)?.ToList();
 			if (fields?.Any() == true)
 			{
 				int seq = 1;
@@ -35,14 +51,19 @@ namespace ODataQueryHelper.Core.Model
 					{
 						string field = parts[0];
 						string direction = (parts.Length == 2) ? parts[1] : "asc";
-						OrderByFields.Add(new OrderByNode
+                        Type t = typeof(T);
+                        var propInfo = t.GetProperty(field);
+                        if (propInfo == null)
+                        {
+                            Error.PropertyNotFound($"Property <{field}> not found for <{t.Name}> in $orderby.");
+                        }
+                        OrderByNodes.Add(new OrderByNode
 						{
 							Sequence = seq,
-							FieldName = field,
-							Direction = (string.Compare(direction, "asc", true) == 0) ? OrderDirectionType.Ascending : OrderDirectionType.Descending
+							PropertyName = field,
+							Direction = (string.Compare(direction, "asc", true) == 0) ? OrderByDirectionType.Ascending : OrderByDirectionType.Descending
 						});
 						seq++;
-						//TODO - validate using property expression
 					}
 				});
 			}
