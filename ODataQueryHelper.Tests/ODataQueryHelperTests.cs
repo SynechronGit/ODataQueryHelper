@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace ODataQueryHelper.Tests
@@ -59,7 +60,7 @@ namespace ODataQueryHelper.Tests
 
 
         [Fact]
-        public void ComplexFilterTest()
+        public async Task ComplexFilterTest()
         {
             var expression = "$filter=(CompanyGroup eq 'Synechron' and IsDeleted eq false) or NumberOfEmployees ge 1";
             //var expression = "startswith(Name,'Syne') eq true";
@@ -68,7 +69,7 @@ namespace ODataQueryHelper.Tests
             var query = docQuery.TryParse(expression);
             runner.Create(query);
             var collection = GetCollection<Company>("company");
-            var list = runner.Query(collection);
+            var list = await runner.QueryAsync(collection);
             Assert.True(list.Count > 0);
         }
 

@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization;
+using System.Threading.Tasks;
 using MongoDB.Driver;
 using ODataQueryHelper.Core.Model;
 
@@ -41,7 +40,7 @@ namespace ODataQueryHelper.MongoDB
         /// <param name="mongoCollection">MongoDB Collection</param>
         /// <exception cref="ArgumentNullException"></exception>
         /// <returns>Document List based on filter and sort definition.</returns>
-        public IList<T> Query(IMongoCollection<T> mongoCollection)
+        public async Task<IList<T>> QueryAsync(IMongoCollection<T> mongoCollection)
         {
             if (mongoCollection == null)
             {
@@ -53,12 +52,12 @@ namespace ODataQueryHelper.MongoDB
                 FilterDefinition = Builders<T>.Filter.Empty;
             }
 
-            return mongoCollection
+            return await mongoCollection
                 .Find(FilterDefinition)
                 .Sort(SortDefinition)
                 .Skip(Skip)
                 .Limit(Limit)
-                .ToList();
+                .ToListAsync();
         }
 
         /// <summary>

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using MongoDB.Driver;
 using ODataQueryHelper.Core.Model;
 
@@ -22,6 +23,6 @@ namespace ODataQueryHelper.MongoDB
         /// <param name="mongoCollection">MongoDB Collection</param>
         /// <exception cref="ArgumentNullException"></exception>
         /// <returns>Document List based on filter and sort definition.</returns>
-        IList<T> Query(IMongoCollection<T> mongoCollection);
+        Task<IList<T>> QueryAsync(IMongoCollection<T> mongoCollection);
     }
 }
