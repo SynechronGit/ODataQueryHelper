@@ -5,17 +5,17 @@ namespace ODataQueryHelper.Core.Model
     /// <summary>
     /// Represents Document Query which can be used to populate result over IQueryable resultset (e.g. MongoDB, SQL etc)
     /// </summary>
-    public class DocumentQuery
+    public class DocumentQuery<T> where T: class
     {
         /// <summary>
         /// Provides options to add filter for result
         /// </summary>
-        public FilterClause Filter { get; protected set; }
+        public FilterClause<T> Filter { get; protected set; }
 
         /// <summary>
         /// Provides options to sort result
         /// </summary>
-        public OrderByClause OrderBy { get; protected set; }
+        public OrderByClause<T> OrderBy { get; protected set; }
 
         /// <summary>
         /// Skip number of result item 
@@ -37,8 +37,8 @@ namespace ODataQueryHelper.Core.Model
         /// </summary>
         public DocumentQuery()
         {
-            Filter = new FilterClause();
-            OrderBy = new OrderByClause();
+            Filter = new FilterClause<T>();
+            OrderBy = new OrderByClause<T>();
         }
 
         /// <summary>
