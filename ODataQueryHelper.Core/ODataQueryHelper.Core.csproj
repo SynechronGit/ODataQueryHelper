@@ -4,4 +4,8 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="StringToExpression" Version="1.0.1" />
+  </ItemGroup>
+
 </Project>

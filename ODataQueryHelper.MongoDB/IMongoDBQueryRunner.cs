@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using MongoDB.Bson;
 using MongoDB.Driver;
 using ODataQueryHelper.Core.Model;
 
@@ -16,13 +15,13 @@ namespace ODataQueryHelper.MongoDB
         /// </summary>
         /// <exception cref="ArgumentNullException"></exception>
         /// <param name="documentQuery">Document Query generated from ODATA expression query</param>
-        void Create(DocumentQuery parser);
+        void Create(DocumentQuery<T> parser);
         /// <summary>
         /// Queries on mongoDB collection and returns list of documents.
         /// </summary>
         /// <param name="mongoCollection">MongoDB Collection</param>
         /// <exception cref="ArgumentNullException"></exception>
         /// <returns>Document List based on filter and sort definition.</returns>
-        IList<T> Query(IMongoCollection<BsonDocument> mongoCollection);
+        IList<T> Query(IMongoCollection<T> mongoCollection);
     }
 }

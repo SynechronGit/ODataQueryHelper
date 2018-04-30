@@ -8,7 +8,7 @@ namespace ODataQueryHelper.Core.Model
     /// <summary>
     /// Represents Order by clause provided in OData Query Expression
     /// </summary>
-    public class OrderByClause
+    public class OrderByClause<T> where T: class
     {
         const string fieldSeparator = @"\,";
         const string orderBySeparator = @"\s+";
@@ -32,7 +32,7 @@ namespace ODataQueryHelper.Core.Model
         /// <exception cref="ArgumentNullException">If <paramref name="expression"/> is not null or empty.</exception>
         /// <exception cref="Exception.PropertyNotFoundException">property name provided in field does not belong to <typeparamref name="T"/>></exception>
         /// <param name="expression">order by expression</param>
-		public void TryParse<T>(string expression)
+		public void TryParse(string expression)
 		{
 			if (string.IsNullOrEmpty(expression))
 			{

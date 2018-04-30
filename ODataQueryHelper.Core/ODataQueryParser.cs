@@ -4,11 +4,11 @@ using System.Web;
 
 namespace ODataQueryHelper.Core
 {
-    public class ODataQueryParser
+    public class ODataQueryParser<T> where T: class
     {
-        public DocumentQuery TryParse<T>(string oDataExpression)
+        public DocumentQuery<T> TryParse(string oDataExpression)
         {
-            var model = new DocumentQuery();
+            var model = new DocumentQuery<T>();
             if (string.IsNullOrEmpty(oDataExpression))
             {
                 throw new ArgumentNullException(nameof(oDataExpression));
@@ -20,13 +20,13 @@ namespace ODataQueryHelper.Core
                 var filterQuery = queryStrings["$filter"];
                 if (!string.IsNullOrEmpty(filterQuery))
                 {
-                    model.Filter.TryParseFilter<T>(filterQuery);
+                    model.Filter.TryParseFilter(filterQuery);
                 }
 
                 var orderByQuery = queryStrings["$orderby"];
                 if (!string.IsNullOrEmpty(orderByQuery))
                 {
-                    model.OrderBy.TryParse<T>(orderByQuery);
+                    model.OrderBy.TryParse(orderByQuery);
                 }
 
                 var skip = queryStrings["$skip"];

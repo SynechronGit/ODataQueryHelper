@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
@@ -17,12 +18,12 @@ namespace ODataQueryHelper.MongoDB
         /// <summary>
         /// MongoDB interpreted filter criteria
         /// </summary>
-        public FilterDefinition<BsonDocument> FilterDefinition { get; set; }
+        public FilterDefinition<T> FilterDefinition { get; set; }
 
         /// <summary>
         /// MongoDB interpreted sort criteria
         /// </summary>
-        public SortDefinition<BsonDocument> SortDefinition { get; set; }
+        public SortDefinition<T> SortDefinition { get; set; }
 
         /// <summary>
         /// Documents to skip
@@ -40,7 +41,7 @@ namespace ODataQueryHelper.MongoDB
         /// <param name="mongoCollection">MongoDB Collection</param>
         /// <exception cref="ArgumentNullException"></exception>
         /// <returns>Document List based on filter and sort definition.</returns>
-        public IList<T> Query(IMongoCollection<BsonDocument> mongoCollection)
+        public IList<T> Query(IMongoCollection<T> mongoCollection)
         {
             if (mongoCollection == null)
             {
@@ -49,19 +50,15 @@ namespace ODataQueryHelper.MongoDB
 
             if (FilterDefinition == null)
             {
-                FilterDefinition = Builders<BsonDocument>.Filter.Empty;
+                FilterDefinition = Builders<T>.Filter.Empty;
             }
-            var result = mongoCollection
+
+            return mongoCollection
                 .Find(FilterDefinition)
                 .Sort(SortDefinition)
                 .Skip(Skip)
                 .Limit(Limit)
                 .ToList();
-
-            return result
-                .Select(d => BsonSerializer.Deserialize<T>(d))
-                .ToList();
-
         }
 
         /// <summary>
@@ -69,23 +66,20 @@ namespace ODataQueryHelper.MongoDB
         /// </summary>
         /// <exception cref="ArgumentNullException"></exception>
         /// <param name="documentQuery">Document Query generated from ODATA expression query</param>
-        public void Create(DocumentQuery documentQuery)
+        public void Create(DocumentQuery<T> documentQuery)
         {
-            if (documentQuery == default(DocumentQuery))
+            if (documentQuery == default(DocumentQuery<T>))
             {
                 throw new ArgumentNullException(nameof(documentQuery));
             }
 
-            if (documentQuery.Filter.Root.Nodes.Any() || documentQuery.Filter.Root.Branches.Any())
+            if (documentQuery.Filter.FilterExpression != default(Expression<Func<T,bool>>))
             {
-                //TODO : Get Root node and keep adding filter
-                FilterCriteriaNode node = documentQuery.Filter.Root.Nodes.First();
-                //TODO : Add Validation
-                FilterDefinition = new FilterDefinitionBuilder<BsonDocument>().Eq(node.PropertyName, node.ValueToCheck);
+                FilterDefinition = new ExpressionFilterDefinition<T>(documentQuery.Filter.FilterExpression);
             }
 
-            var sortBuilder = Builders<BsonDocument>.Sort;
-            List<SortDefinition<BsonDocument>> sortDefinitions = new List<SortDefinition<BsonDocument>>();
+            var sortBuilder = Builders<T>.Sort;
+            List<SortDefinition<T>> sortDefinitions = new List<SortDefinition<T>>();
 
             documentQuery
                 .OrderBy
