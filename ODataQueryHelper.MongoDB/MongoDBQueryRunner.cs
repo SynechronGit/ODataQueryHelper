@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using MongoDB.Driver;
 using ODataQueryHelper.Core.Model;
 
-namespace ODataQueryHelper.MongoDB
+namespace ODataQueryRunner.MongoDB
 {
     /// <summary>
     /// Creates and Runs OData query on MongoDB Collection

@@ -2,10 +2,14 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/SynechronGit/ODataQueryHelper</PackageProjectUrl>
     <RepositoryUrl>https://github.com/SynechronGit/ODataQueryHelper</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <Version>1.0.0</Version>
+    <Company>Synechron Inc</Company>
+    <Authors>Synechron Inc</Authors>
   </PropertyGroup>
 
   <ItemGroup>

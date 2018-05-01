@@ -7,6 +7,9 @@
     <RepositoryUrl>https://github.com/SynechronGit/ODataQueryHelper</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <Version>1.0.0</Version>
+    <Company>Synechron Inc</Company>
+    <Authors>Synechron Inc</Authors>
+    <PackageId>ODataQueryRunner.MongoDB</PackageId>
   </PropertyGroup>
 
   <ItemGroup>

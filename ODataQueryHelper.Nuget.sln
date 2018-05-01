@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2037
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ODataQueryHelper.Core", "ODataQueryHelper.Core\ODataQueryHelper.Core.csproj", "{7983ADF0-A14F-4291-AF59-C57EA5043F69}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ODataQueryHelper.Core", "ODataQueryHelper.Core\ODataQueryHelper.Core.csproj", "{7983ADF0-A14F-4291-AF59-C57EA5043F69}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ODataQueryHelper.MongoDB", "ODataQueryHelper.MongoDB\ODataQueryHelper.MongoDB.csproj", "{C588AB14-4423-4491-B510-2F5148A5D45B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ODataQueryRunner.MongoDB", "ODataQueryHelper.MongoDB\ODataQueryRunner.MongoDB.csproj", "{C588AB14-4423-4491-B510-2F5148A5D45B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
