@@ -254,6 +254,17 @@ namespace ODataQueryHelper.Core.Language
                             method:Type<string>.Method(x=>x.Contains(null)),
                             arguments: new [] { parameters[0] });
                     }),
+                 new FunctionCallDefinition(
+                    name:"FN_CONTAINS",
+                    regex: @"contains\(",
+                    argumentTypes: new[] {typeof(string), typeof(string) },
+                    expressionBuilder: (parameters) => {
+                        var param0Exp = Expression.Call(instance:parameters[0], method:Type<string>.Method(x=>x.ToLower()));
+                        return Expression.Call( 
+                            instance: param0Exp,
+                                    method:Type<string>.Method(x=>x.Contains(null)),
+                            arguments: new [] { parameters[1] });
+                    }),
                 new FunctionCallDefinition(
                     name:"FN_TOLOWER",
                     regex: @"tolower\(",
@@ -326,7 +337,8 @@ namespace ODataQueryHelper.Core.Language
                         return Expression.MakeMemberAccess(
                             parameters[0],
                             Type<DateTime>.Member(x=>x.Second));
-                    }),
+                    })
+
             };
         }
     }

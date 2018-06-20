@@ -52,7 +52,7 @@ namespace ODataQueryHelper.Core.Model
 						string field = parts[0];
 						string direction = (parts.Length == 2) ? parts[1] : "asc";
                         Type t = typeof(T);
-                        var propInfo = t.GetProperty(field);
+                        var propInfo = t.GetProperty(field, System.Reflection.BindingFlags.IgnoreCase| System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance);
                         if (propInfo == null)
                         {
                             Error.PropertyNotFound($"Property <{field}> not found for <{t.Name}> in $orderby.");
@@ -60,7 +60,7 @@ namespace ODataQueryHelper.Core.Model
                         OrderByNodes.Add(new OrderByNode
 						{
 							Sequence = seq,
-							PropertyName = field,
+							PropertyName = propInfo.Name,
 							Direction = (string.Compare(direction, "asc", true) == 0) ? OrderByDirectionType.Ascending : OrderByDirectionType.Descending
 						});
 						seq++;
