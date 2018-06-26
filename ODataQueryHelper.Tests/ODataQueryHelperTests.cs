@@ -54,6 +54,19 @@ namespace ODataQueryHelper.Tests
             Assert.True(list.Count > 0);
         }
 
+        [Fact]
+        public async Task EnumConditionTest()
+        {
+            var expression = "$filter=MessagingAccountType ne 1";
+            var runner = new MongoDBQueryRunner<MessagingAccount>();
+            var docQuery = new ODataQueryParser<MessagingAccount>();
+            var query = docQuery.TryParse(expression);
+            runner.Create(query);
+            var collection = GetCollection<MessagingAccount>("messagingaccount");
+            var list = await runner.QueryAsync(collection);
+            Assert.True(list.Count > 0);
+        }
+
 
         private IMongoCollection<T> GetCollection<T>(string name)
         {

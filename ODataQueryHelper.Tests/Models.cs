@@ -31,6 +31,21 @@ namespace ODataQueryHelper.Tests
         public int UserId { get; set; }
         public bool IsDeleted { get; set; }
     }
+
+    /// <summary>
+    /// Enumeration for Available Messaging account types
+    /// </summary>
+    public enum MessagingAccountType
+    {
+        /// <summary>
+        /// Messaging account is for Email communication
+        /// </summary>
+        Email = 0,
+        /// <summary>
+        /// Messaging account is for SMS communication
+        /// </summary>
+        Sms = 1
+    }
     /// <summary>
     /// Represents Messaging account to process and send communication messages
     /// </summary>

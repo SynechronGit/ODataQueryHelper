@@ -104,12 +104,26 @@ namespace ODataQueryHelper.Core.Language
                     name:"EQ",
                     regex: @"eq",
                     orderOfPrecedence:11,
-                    expressionBuilder: (left,right) => Expression.Equal(left, right)),
+                    expressionBuilder: 
+                    (left,right) => {
+                        if (left.Type.IsEnum)
+                        {
+                            return Expression.Equal(left, Expression.Convert(right, left.Type));
+                        }
+                        return Expression.Equal(left, right);
+                    }),
                 new BinaryOperatorDefinition(
                     name:"NE",
                     regex: @"ne",
                     orderOfPrecedence:12,
-                    expressionBuilder: (left,right) => Expression.NotEqual(left, right)),
+                    expressionBuilder:
+                    (left,right) => {
+                        if (left.Type.IsEnum)
+                        {
+                            return Expression.NotEqual(left, Expression.Convert(right, left.Type));
+                        }
+                        return Expression.NotEqual(left, right);
+                    }),
 
                 new BinaryOperatorDefinition(
                     name:"GT",
