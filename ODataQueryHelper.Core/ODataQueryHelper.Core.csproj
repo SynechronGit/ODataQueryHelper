@@ -13,7 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="StringToExpression" Version="1.0.1" />
+    <PackageReference Include="StringToExpression" Version="1.1.0" />
   </ItemGroup>
 
 </Project>

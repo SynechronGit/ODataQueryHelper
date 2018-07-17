@@ -68,7 +68,7 @@ namespace ODataQueryHelper.Tests
         /// <summary>
         /// Get or set messaging account type
         /// </summary>
-        public int MessagingAccountType { get; set; }
+        public MessagingAccountType MessagingAccountType { get; set; }
 
         /// <summary>
         /// Get or set type of messaging account
