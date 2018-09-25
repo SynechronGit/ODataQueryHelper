@@ -229,9 +229,10 @@ namespace ODataQueryHelper.Core.Language
                     regex: @"startswith\(",
                     argumentTypes: new[] {typeof(string), typeof(string) },
                     expressionBuilder: (parameters) => {
+                        var param0Exp = Expression.Call(instance:parameters[0], method:Type<string>.Method(x=>x.ToLower()));
                         return Expression.Call(
-                            instance:parameters[0],
-                            method:Type<string>.Method(x=>x.StartsWith(null)),
+                            instance: param0Exp,
+                                    method:Type<string>.Method(x=>x.StartsWith(null)),
                             arguments: new [] { parameters[1] });
                     }),
                 new FunctionCallDefinition(
@@ -239,9 +240,10 @@ namespace ODataQueryHelper.Core.Language
                     regex: @"endswith\(",
                     argumentTypes: new[] {typeof(string), typeof(string) },
                     expressionBuilder: (parameters) => {
+                         var param0Exp = Expression.Call(instance:parameters[0], method:Type<string>.Method(x=>x.ToLower()));
                         return Expression.Call(
-                            instance:parameters[0],
-                            method:Type<string>.Method(x=>x.EndsWith(null)),
+                            instance: param0Exp,
+                                    method:Type<string>.Method(x=>x.EndsWith(null)),
                             arguments: new [] { parameters[1] });
                     }),
                  new FunctionCallDefinition(
