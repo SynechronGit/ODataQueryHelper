@@ -22,7 +22,7 @@ namespace ODataQueryHelper.Core.Model
         /// <summary>
         /// Root criteria branch. Typically bracket 
         /// </summary>
-        public FilterCriteriaBranch Root { get; set; }
+        private FilterCriteriaBranch Root { get; set; }
 
         /// <summary>
         /// Parsed filter expression
