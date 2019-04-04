@@ -109,7 +109,7 @@ namespace ODataQueryHelper.Core.Language
                     name:"NE",
                     regex: @"ne",
                     orderOfPrecedence:12,
-                    expressionBuilder: ConvertEnumsIfRequired((left,right) => Expression.Equal(left, right))),
+                    expressionBuilder: ConvertEnumsIfRequired((left,right) => Expression.NotEqual(left, right))),
 
                 new BinaryOperatorDefinition(
                     name:"GT",
