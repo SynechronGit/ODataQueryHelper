@@ -14,16 +14,8 @@ namespace ODataQueryHelper.Core.Model
         /// </summary>
         public FilterClause()
         {
-            Root = new FilterCriteriaBranch();
         }
         
-        //public Expression<Func<T,bool>> FilterExpression { get; set; }
-
-        /// <summary>
-        /// Root criteria branch. Typically bracket 
-        /// </summary>
-        private FilterCriteriaBranch Root { get; set; }
-
         /// <summary>
         /// Parsed filter expression
         /// </summary>
@@ -45,22 +37,6 @@ namespace ODataQueryHelper.Core.Model
 
             FilterExpression = mongoDbFilterLang.Parse<T>(filterExpression);
 
-            ////TODO : Parsing Logic for Filter
-            //Type t = typeof(T);
-            //var tokens = filterExpression.Split(" eq ");
-            //if (tokens.Length == 2)
-            //{
-            //    var propInfo = t.GetProperty(tokens[0]);
-            //    if (propInfo == null)
-            //    {
-            //        Error.PropertyNotFound($"Property <{tokens[0]}> not found for <{t.Name}> in $filter.");
-            //    }
-            //    Root.AddNode(tokens[0], FilterCriteriaType.Equal, ConvertTo(tokens[1], propInfo.PropertyType));
-            //}
-            //else
-            //{
-            //    throw new NotImplementedException("Filter function is not supported yet.");
-            //}
         }
 
 
