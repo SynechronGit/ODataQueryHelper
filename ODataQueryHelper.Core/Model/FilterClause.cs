@@ -1,4 +1,5 @@
-﻿using ODataQueryHelper.Core.Language;
+﻿using ODataQueryHelper.Core.Extensions;
+using ODataQueryHelper.Core.Language;
 using System;
 using System.Linq.Expressions;
 
@@ -35,7 +36,7 @@ namespace ODataQueryHelper.Core.Model
 
             var mongoDbFilterLang = new MongoDBFilterLanguage();
 
-            FilterExpression = mongoDbFilterLang.Parse<T>(filterExpression);
+            FilterExpression = mongoDbFilterLang.Parse<T>(filterExpression.Escape());
 
         }
 

@@ -15,7 +15,8 @@ namespace ODataQueryHelper.Tests
 
     public class Company
     {
-        public Object _id { get; set; }
+        public Guid _id { get; set; }
+        public string EntityType { get; set; }
         public string Name { get; set; }
         public string WebsiteUrl { get; set; }
         public int NumberOfEmployees { get; set; }
