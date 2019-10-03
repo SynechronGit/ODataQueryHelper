@@ -28,7 +28,7 @@ namespace ODataQueryHelper.Tests
         [Fact]
         public async Task ComplexFilterTest()
         {
-                var expression = "$filter=(EntityType eq 'Gem''s Mine' and Name eq 'Synechron' and IsDeleted eq false) or NumberOfEmployees ge 1&$orderby=name desc";
+                var expression = "$filter=(EntityType eq 'Gem\\'s Mine' and Name eq 'Synechron' and IsDeleted eq false) or NumberOfEmployees ge 1&$orderby=employee.account.name desc, employee.firstname asc";
                 //var expression = "startswith(Name,'Syne') eq true";
                 var runner = new MongoDBQueryRunner<Company>();
                 var docQuery = new ODataQueryParser<Company>();

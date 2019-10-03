@@ -1,7 +1,5 @@
 ﻿using MongoDB.Bson;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace ODataQueryHelper.Tests
 {
@@ -11,6 +9,7 @@ namespace ODataQueryHelper.Tests
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public int Age { get; set; }
+        public MessagingAccount Account { get; set; }
     }
 
     public class Company
@@ -31,6 +30,7 @@ namespace ODataQueryHelper.Tests
         public string UserName { get; set; }
         public int UserId { get; set; }
         public bool IsDeleted { get; set; }
+        public Employee Employee { get; set; }
     }
 
     /// <summary>

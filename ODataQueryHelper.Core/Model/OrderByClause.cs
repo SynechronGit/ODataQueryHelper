@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Text.RegularExpressions;
 
 namespace ODataQueryHelper.Core.Model
@@ -45,21 +46,16 @@ namespace ODataQueryHelper.Core.Model
                 int seq = 1;
                 fields.ForEach(o =>
                 {
-                    var parts = Regex.Split(o, orderBySeparator);
+                    var parts = Regex.Split(o.Trim(), orderBySeparator);
                     if (parts.Length <= 2)
                     {
                         string field = parts[0];
                         string direction = (parts.Length == 2) ? parts[1] : "asc";
-                        Type t = typeof(T);
-                        var propInfo = t.GetProperty(field, System.Reflection.BindingFlags.IgnoreCase | System.Reflection.BindingFlags.Public | System.Reflection.BindingFlags.Instance);
-                        if (propInfo == null)
-                        {
-                            Error.PropertyNotFound($"Property <{field}> not found for <{t.Name}> in $orderby.");
-                        }
+
                         var newNode = new OrderByNode<T>
                         {
                             Sequence = seq,
-                            PropertyName = propInfo.Name,
+                            PropertyName = field,
                             Direction = (string.Compare(direction, "asc", true) == 0) ? OrderByDirectionType.Ascending : OrderByDirectionType.Descending
                         };
                         CreateExpression(newNode);
@@ -76,26 +72,38 @@ namespace ODataQueryHelper.Core.Model
         /// <param name="node">Order by node to create expression</param>
         private void CreateExpression(OrderByNode<T> node)
         {
-            if (!string.IsNullOrWhiteSpace(node?.PropertyName))
+            const string expressionName = "o";
+            try
             {
-                var param = Expression.Parameter(typeof(T), "p");
-                var parts = node.PropertyName.Split('.');
-                Expression parent = param;
-                foreach (var part in parts)
+                if (!string.IsNullOrWhiteSpace(node?.PropertyName))
                 {
-                    parent = Expression.Property(parent, part);
-                }
+                    var param = Expression.Parameter(typeof(T), expressionName);
+                    var parts = node.PropertyName.Split('.');
+                    Expression parent = param;
+                    foreach (var part in parts)
+                    {
+                        parent = Expression.Property(parent, part);
+                    }
 
-                if (parent.Type.IsValueType)
-                {
-                    var converted = Expression.Convert(parent, typeof(object));
-                    node.Expression = Expression.Lambda<Func<T, object>>(converted, param);
-                }
-                else
-                {
-                    node.Expression = Expression.Lambda<Func<T, object>>(parent, param);
+                    if (parent.Type.IsValueType)
+                    {
+                        var converted = Expression.Convert(parent, typeof(object));
+                        node.Expression = Expression.Lambda<Func<T, object>>(converted, param);
+                    }
+                    else
+                    {
+                        node.Expression = Expression.Lambda<Func<T, object>>(parent, param);
+                    }
+                    node.PropertyName = parent.ToString();
+                    if (node.PropertyName.StartsWith($"{expressionName}."))
+                        node.PropertyName = node.PropertyName.Substring($"{expressionName}.".Length);
                 }
             }
+            catch (ArgumentException ex)
+            {
+                Error.PropertyNotFound(ex.Message);
+            }
         }
+
     }
 }
