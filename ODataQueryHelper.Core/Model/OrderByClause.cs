@@ -78,7 +78,7 @@ namespace ODataQueryHelper.Core.Model
                 if (!string.IsNullOrWhiteSpace(node?.PropertyName))
                 {
                     var param = Expression.Parameter(typeof(T), expressionName);
-                    var parts = node.PropertyName.Split('.');
+                    var parts = node.PropertyName.Replace('/','.').Split('.');
                     Expression parent = param;
                     foreach (var part in parts)
                     {
