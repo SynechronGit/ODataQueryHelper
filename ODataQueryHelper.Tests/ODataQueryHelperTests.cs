@@ -70,7 +70,7 @@ namespace ODataQueryHelper.Tests
 
         private IMongoCollection<T> GetCollection<T>(string name)
         {
-            var mongoUrl = new MongoUrl("mongodb://quartzdbmongo:dbUser123@23.99.128.104:27017/quartz-dev");
+            var mongoUrl = new MongoUrl("mongodb://dbAdmin:xxxxx@localhost:27017/odata-test");
             MongoClientSettings mongoClientSettings = MongoClientSettings.FromUrl(mongoUrl);
             mongoClientSettings.ClusterConfigurator = cb =>
                 {
