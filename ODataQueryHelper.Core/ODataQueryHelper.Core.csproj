@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/SynechronGit/ODataQueryHelper</PackageProjectUrl>
     <RepositoryUrl>https://github.com/SynechronGit/ODataQueryHelper</RepositoryUrl>
@@ -11,9 +10,7 @@
     <Company>Synechron Inc</Company>
     <Authors>Synechron Inc</Authors>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="StringToExpression" Version="1.1.1" />
+    <PackageReference Include="StringToExpression" Version="2.1.1" />
   </ItemGroup>
-
 </Project>

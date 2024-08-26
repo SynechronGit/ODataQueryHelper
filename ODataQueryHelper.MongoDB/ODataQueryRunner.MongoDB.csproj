@@ -1,7 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageProjectUrl>https://github.com/SynechronGit/ODataQueryHelper</PackageProjectUrl>
     <RepositoryUrl>https://github.com/SynechronGit/ODataQueryHelper</RepositoryUrl>
@@ -11,13 +10,10 @@
     <Authors>Synechron Inc</Authors>
     <PackageId>ODataQueryRunner.MongoDB</PackageId>
   </PropertyGroup>
-
   <ItemGroup>
-    <PackageReference Include="MongoDB.Driver" Version="2.11.4" />
+    <PackageReference Include="MongoDB.Driver" Version="2.28.0" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\ODataQueryHelper.Core\ODataQueryHelper.Core.csproj" />
   </ItemGroup>
-
 </Project>
